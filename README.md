@@ -23,3 +23,9 @@ This repository encompasses two primary deliverables:
     ├── api-design.md     # Production REST API specs & JSON schemas
     ├── data-model.md     # PostgreSQL schema, DDL, indexes & SQL choices
     └── architecture.md   # Capacity estimates, C4 diagrams, and SPOF analysis
+
+## 💡 What I Learned
+
+1. **RESTful API Contracts & Client Integration:** Learned how to safely manage asynchronous HTTP requests (`GET`, `POST`, `DELETE`) with unified state handling and defensive DOM insertion using `textContent`.
+2. **Relational Database Design at Scale:** Gained deep insights into structuring 1:N and N:M entities with foreign keys, composite primary keys, and partial indexes to optimize performance for 1 million active users.
+3. **High-Availability System Architecture:** Understood key trade-offs in cloud systems, such as implementing CDN caching, load balancing, multi-AZ database read replicas, and asynchronous worker queues to eliminate single points of failure.
