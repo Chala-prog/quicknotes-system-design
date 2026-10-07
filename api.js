@@ -1,6 +1,6 @@
 const API_URL = 'https://jsonplaceholder.typicode.com/posts';
 
-// Elements matching rubric IDs
+// Required DOM Element Selectors
 const loadBtn = document.getElementById('load-btn');
 const statusP = document.getElementById('status');
 const notesList = document.getElementById('notes-list');
@@ -9,7 +9,7 @@ const titleInput = document.getElementById('title-input');
 const bodyInput = document.getElementById('body-input');
 const submitBtn = document.getElementById('submit-btn');
 
-// --- Reusable Request Helper ---
+// --- Reusable Central Request Helper ---
 async function request(url, options = {}) {
   const response = await fetch(url, options);
   if (!response.ok) {
@@ -19,7 +19,7 @@ async function request(url, options = {}) {
   return await response.json();
 }
 
-// --- DOM Rendering Helper ---
+// --- Card Element Builder ---
 function createNoteItem(note) {
   const li = document.createElement('li');
   li.className = 'note-card';
@@ -80,7 +80,6 @@ async function createNote(event) {
   const titleValue = titleInput.value.trim();
   const bodyValue = bodyInput.value.trim();
 
-  // Input Validation
   if (!titleValue) {
     statusP.textContent = 'Error: Title is required.';
     statusP.className = 'status error';
@@ -125,7 +124,6 @@ async function deleteNote(noteId, element) {
   statusP.textContent = `Deleting note ${noteId}...`;
   statusP.className = 'status loading';
 
-  // Handle client-side pseudo-IDs (> 100)
   if (!noteId || noteId > 100) {
     element.remove();
     statusP.textContent = `Note ${noteId} deleted successfully (local item).`;
@@ -153,6 +151,5 @@ function checkEmpty() {
   }
 }
 
-// Event Listeners
 loadBtn.addEventListener('click', loadNotes);
 noteForm.addEventListener('submit', createNote);
