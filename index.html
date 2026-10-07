@@ -1,43 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QuickNotes System Design</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="api.js" defer></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
+  <main class="container">
     <header>
-      <h1>QuickNotes Manager</h1>
-      <button id="load-btn">Load Notes</button>
-      <p id="status" aria-live="polite"></p>
+      <h1>QuickNotes</h1>
+      <button id="load-notes-btn">Load notes</button>
     </header>
 
-    <main>
-      <section class="form-section">
-        <h2>Create a Note</h2>
-        <form id="note-form">
-          <div class="form-group">
-            <label for="title-input">Title (Required, max 100 chars):</label>
-            <input type="text" id="title-input" maxlength="100" required>
-          </div>
+    <!-- Task 2: Create Note Form -->
+    <section class="create-note-section">
+      <h2>Create New Note</h2>
+      <form id="create-note-form">
+        <div class="form-group">
+          <label for="note-title">Title *</label>
+          <input 
+            type="text" 
+            id="note-title" 
+            name="title" 
+            maxlength="100" 
+            placeholder="Enter note title (max 100 characters)" 
+            required 
+          />
+          <small id="title-error" class="error-text" style="display: none; color: red;"></small>
+        </div>
 
-          <div class="form-group">
-            <label for="body-input">Body:</label>
-            <textarea id="body-input" rows="4"></textarea>
-          </div>
+        <div class="form-group">
+          <label for="note-body">Body (optional)</label>
+          <textarea 
+            id="note-body" 
+            name="body" 
+            rows="3" 
+            placeholder="Enter note content..."
+          ></textarea>
+        </div>
 
-          <button type="submit" id="submit-btn">Add Note</button>
-        </form>
-      </section>
+        <button type="submit" id="submit-note-btn">Create Note</button>
+      </form>
+    </section>
 
-      <section class="list-section">
-        <h2>Your Notes</h2>
-        <ul id="notes-list"></ul>
-      </section>
-    </main>
-  </div>
+    <div id="status-message" role="status" aria-live="polite"></div>
+
+    <section id="notes-list" class="notes-list"></section>
+  </main>
+
+  <script src="api.js"></script>
 </body>
 </html>
