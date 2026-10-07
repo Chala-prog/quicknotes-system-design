@@ -26,6 +26,6 @@ This repository encompasses two primary deliverables:
 
 ## 💡 What I Learned
 
-1. **RESTful API Contracts & Client Integration:** Learned how to safely manage asynchronous HTTP requests (`GET`, `POST`, `DELETE`) with unified state handling and defensive DOM insertion using `textContent`.
-2. **Relational Database Design at Scale:** Gained deep insights into structuring 1:N and N:M entities with foreign keys, composite primary keys, and partial indexes to optimize performance for 1 million active users.
-3. **High-Availability System Architecture:** Understood key trade-offs in cloud systems, such as implementing CDN caching, load balancing, multi-AZ database read replicas, and asynchronous worker queues to eliminate single points of failure.
+1. **RESTful API Client Architecture:** Gained experience in building resilient asynchronous HTTP wrappers around `fetch` calls, handling HTTP status codes, and manipulating the DOM safely using `textContent`.
+2. **Relational Database Design for High Concurrency:** Modeled 1:N and N:M schemas using PostgreSQL with primary/foreign key constraints, partial indexes, and GIN full-text search fields optimized for 1M users.
+3. **High-Availability Cloud Systems:** Designed multi-tier architectures featuring CDN edge protection, load balancing across redundant app instances, multi-AZ database read replicas, and asynchronous task queues to eliminate single points of failure.  
