@@ -1,6 +1,6 @@
 const API_URL = 'https://jsonplaceholder.typicode.com/posts';
 
-// Required DOM Element Selectors
+// Required Selectors
 const loadBtn = document.getElementById('load-btn');
 const statusP = document.getElementById('status');
 const notesList = document.getElementById('notes-list');
@@ -19,7 +19,7 @@ async function request(url, options = {}) {
   return await response.json();
 }
 
-// --- Card Element Builder ---
+// --- Card DOM Builder ---
 function createNoteItem(note) {
   const li = document.createElement('li');
   li.className = 'note-card';
