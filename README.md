@@ -7,8 +7,8 @@ Welcome to the **QuickNotes** engineering repository. This project demonstrates 
 ## 📌 Project Overview
 
 This repository encompasses two primary deliverables:
-1. **Frontend API Integration (Proof of Concept):** Vanilla JavaScript interface demonstrating complete CRUD integration (GET, POST, DELETE) against the practice REST API (`JSONPlaceholder`).
-2. **Backend Engineering & System Design Documentation:** Production specs and architectural blueprints created for the backend team to build the scalable service.
+1. **Frontend API Integration (Proof of Concept):** A vanilla JavaScript interface demonstrating complete CRUD integration (GET, POST, DELETE) against the practice REST API (`JSONPlaceholder`).
+2. **Backend Engineering & System Design Documentation:** Production specs and architectural blueprints created for the backend engineering team to build the scalable service.
 
 ---
 
@@ -19,13 +19,27 @@ This repository encompasses two primary deliverables:
 ├── index.html            # Main UI container for QuickNotes
 ├── style.css             # Application styling and status indicators
 ├── api.js                # Frontend API fetch, rendering, and state handlers
+├── README.md             # Project documentation and setup guide
 └── docs/                 # Backend system design specifications
     ├── api-design.md     # Production REST API specs & JSON schemas
     ├── data-model.md     # PostgreSQL schema, DDL, indexes & SQL choices
     └── architecture.md   # Capacity estimates, C4 diagrams, and SPOF analysis
+```
 
-## 💡 What I Learned
 
-1. **RESTful API Client Architecture:** Gained experience in building resilient asynchronous HTTP wrappers around `fetch` calls, handling HTTP status codes, and manipulating the DOM safely using `textContent`.
-2. **Relational Database Design for High Concurrency:** Modeled 1:N and N:M schemas using PostgreSQL with primary/foreign key constraints, partial indexes, and GIN full-text search fields optimized for 1M users.
-3. **High-Availability Cloud Systems:** Designed multi-tier architectures featuring CDN edge protection, load balancing across redundant app instances, multi-AZ database read replicas, and asynchronous task queues to eliminate single points of failure.  
+---
+
+   ## How to Run the API Client
+
+1. **Clone the Repository:**
+   
+   git clone [https://github.com/Chala-prog/quicknotes-system-design.git](https://github.com/Chala-prog/quicknotes-system-design.git)
+cd quicknotes-system-design  
+
+
+---
+## What I Learned
+
+1. **RESTful API Integration & Client State:** Learned how to structure reusable asynchronous wrappers around `fetch` requests and present clear visual feedback across loading, error, success, and empty state events.
+2. **Relational Data Modeling:** Gained hands-on experience designing normalized $1:N$ and $N:M$ SQL schemas with primary keys, foreign key constraints, partial indexes, and full-text search capabilities.
+3. **Distributed System Architecture:** Deepened my understanding of scaling web services to 1M daily active users through CDN edge caching, load balancing, multi-AZ database read replication, and asynchronous message queue processing.
