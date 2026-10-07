@@ -12,11 +12,21 @@ const bodyInput = document.getElementById('note-body');
 const submitNoteBtn = document.getElementById('submit-note-btn');
 const titleError = document.getElementById('title-error');
 
-// --- Helper Functions ---
+// --- Task 3: Handle JSONPlaceholder Pseudo-Persistence ---
+/**
+ * JSONPlaceholder Strategy:
+ * 1. JSONPlaceholder returns `id: 101` for newly created POST items, but it doesn't 
+ *    persist them on its server database.
+ * 2. Sending `DELETE /posts/101` to JSONPlaceholder results in a 404 response.
+ * 3. To handle this sensibly: if a note is newly created locally or has an ID > 100 
+ *    (or fails with a 404), we remove the DOM card immediately and report a successful deletion.
+ * 4. For existing server items (IDs 1–100), we issue the real `DELETE /posts/{id}` request.
+ */
 
 function createNoteCard(note) {
   const card = document.createElement('article');
   card.className = 'note-card';
+  card.dataset.id = note.id || 'local';
 
   const title = document.createElement('h3');
   title.textContent = note.title;
@@ -24,8 +34,16 @@ function createNoteCard(note) {
   const body = document.createElement('p');
   body.textContent = note.body || '';
 
+  // Task 3: Add Delete button to each note card
+  const deleteBtn = document.createElement('button');
+  deleteBtn.className = 'delete-btn';
+  deleteBtn.textContent = 'Delete';
+  deleteBtn.addEventListener('click', () => handleDeleteNote(note.id, card));
+
   card.appendChild(title);
   card.appendChild(body);
+  card.appendChild(deleteBtn);
+
   return card;
 }
 
@@ -78,7 +96,6 @@ async function handleCreateNote(event) {
   const titleValue = titleInput.value.trim();
   const bodyValue = bodyInput.value.trim();
 
-  // 1. Validation
   if (!titleValue) {
     titleError.textContent = 'Title is required.';
     titleError.style.display = 'block';
@@ -91,7 +108,6 @@ async function handleCreateNote(event) {
     return;
   }
 
-  // 2. Set UI loading state
   submitNoteBtn.disabled = true;
   statusMessage.textContent = 'Creating note...';
   statusMessage.className = 'status loading';
@@ -117,23 +133,65 @@ async function handleCreateNote(event) {
 
     const createdNote = await response.json();
 
-    // 3. Prepend newly created note to top of list
     const noteCard = createNoteCard(createdNote);
     notesList.prepend(noteCard);
 
-    // 4. Update status message
     statusMessage.textContent = `Note created (status ${response.status}, id ${createdNote.id}).`;
     statusMessage.className = 'status success';
 
-    // 5. Clear form after success
     createNoteForm.reset();
   } catch (error) {
     console.error('Failed to create note:', error);
     statusMessage.textContent = 'Unable to create note. Please try again.';
     statusMessage.className = 'status error';
   } finally {
-    // 6. Re-enable button
     submitNoteBtn.disabled = false;
+  }
+}
+
+// --- Task 3: Delete Note (DELETE) ---
+
+async function handleDeleteNote(noteId, cardElement) {
+  const deleteBtn = cardElement.querySelector('.delete-btn');
+  deleteBtn.disabled = true;
+  statusMessage.textContent = `Deleting note ${noteId}...`;
+  statusMessage.className = 'status loading';
+
+  // Fallback for client-only / non-persisted notes created in session
+  if (!noteId || noteId > 100) {
+    cardElement.remove();
+    statusMessage.textContent = `Note ${noteId} deleted successfully (local mockup item).`;
+    statusMessage.className = 'status success';
+    checkEmptyState();
+    return;
+  }
+
+  try {
+    const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${noteId}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    // Remove from UI list on success
+    cardElement.remove();
+    statusMessage.textContent = `Note ${noteId} deleted successfully (status ${response.status}).`;
+    statusMessage.className = 'status success';
+
+    checkEmptyState();
+  } catch (error) {
+    console.error('Failed to delete note:', error);
+    statusMessage.textContent = `Unable to delete note ${noteId}. Please try again.`;
+    statusMessage.className = 'status error';
+    deleteBtn.disabled = false;
+  }
+}
+
+function checkEmptyState() {
+  if (notesList.children.length === 0) {
+    notesList.innerHTML = '<p class="empty-state">No notes found on the server.</p>';
   }
 }
 
